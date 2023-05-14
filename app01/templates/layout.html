@@ -1,0 +1,149 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>EAdmin</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href={% static "plugins/bootstrap-3.4.1/css/bootstrap.min.css" %}>
+    <link rel="stylesheet" href={% static "css/layout.css" %}>
+    {% block head %}{% endblock %}
+
+</head>
+<style>
+
+    /* Changed CSS of Bootstrap */
+    .nav > li > a:hover,
+    .nav > li > a:focus {
+        text-decoration: none;
+        background-color: rgb(230, 230, 230);
+    }
+
+    .navbar {
+        margin-bottom: 0;
+        border-radius: 0;
+    }
+
+    .navbar-default {
+        background-color: white;
+    }
+
+    .breadcrumb {
+        background-color: rgb(240, 240, 240);
+    }
+
+</style>
+
+
+<body>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar" id="menu" state="open">
+            <div class="logo"></div>
+            <ul class="nav nav-sidebar">
+                <li><a href="/depart/list/">部门管理</a></li>
+                <li><a href="/user/list/">用户管理</a></li>
+                <li><a href="/pretty/list/">靓号管理</a></li>
+                <li><a href="/admin/list/">管理员管理</a></li>
+                <li><a href="/chart/list/">数据可视化</a></li>
+                <li><a href="/upload/list/">文件上传</a></li>
+            </ul>
+        </div>
+
+
+        <div class="col-sm-9 col-md-10 main" state="default">
+            <nav class="navbar navbar-default">
+
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                            data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="javascript:void(0)" id="togglebtn" onclick="toggleNav()">
+                        <span style="color: forestgreen" class="glyphicon glyphicon-align-justify"
+                              aria-hidden="true"></span>
+                    </a>
+                </div>
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li><a href="#">Link</a></li>
+                        <li><a href="#">Link</a></li>
+
+                    </ul>
+                    <form class="navbar-form navbar-left">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Search">
+                        </div>
+                        <button type="submit" class="btn btn-default">
+                            <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                        </button>
+                    </form>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                               aria-haspopup="true" aria-expanded="false">{{ request.session.info.name }}<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">个人资料</a></li>
+                                <li><a href="#">我的信息</a></li>
+                                <li role="separator" class="divider"></li>
+                                <li><a href="/logout/">注销</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div><!-- /.navbar-collapse -->
+            </nav>
+
+            {% block content %}{% endblock %}
+        </div>
+    </div>
+</div>
+{% block body %}{% endblock %}
+
+<script>
+
+    function toggleNav() {
+        var menu = document.querySelector('#menu');
+        var main = document.querySelector('.main');
+        var menuState = menu.getAttribute("state")
+        if (menuState === "closed") {
+            menu.setAttribute('state', 'open');
+            main.setAttribute('state', 'default');
+        } else if (menuState === "open") {
+            menu.setAttribute('state', 'closed');
+            main.setAttribute('state', 'fullscreen');
+        }
+    }
+
+    // 检查窗口宽度，较小时关闭侧边栏
+    function checkwindowwidth() {
+        var width = window.innerWidth;
+        if (width < 1535) {
+            var menu = document.querySelector('#menu');
+            var main = document.querySelector('.main');
+            menu.setAttribute('state', 'closed');
+            main.setAttribute('state', 'fullscreen')
+        }
+    }
+
+    checkwindowwidth();
+    window.onresize = function () {
+        checkwindowwidth();
+    }
+
+    {% block script %}{% endblock %}
+
+</script>
+{% block js %}
+{% endblock %}
+<script src="{% static 'js/jquery-3.6.4.js' %}"></script>
+<script src="{% static 'plugins/bootstrap-3.4.1/js/bootstrap.min.js' %}"></script>
+</body>
+</html>
+

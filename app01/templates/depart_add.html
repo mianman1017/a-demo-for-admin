@@ -1,0 +1,25 @@
+{% extends 'layout.html' %}
+{% block content %}
+    <ol class="breadcrumb">
+        <li><a href="#">Manage</a></li>
+        <li><a href="#">department</a></li>
+        <li class="active">add</li>
+    </ol>
+    <div class="container">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">新建部门</h3>
+            </div>
+            <div class="panel-body" novalidate>
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="InputTitle">名称</label>
+                        <input type="text" class="form-control" id="InputTitle" name="title">
+                    </div>
+                    <button type="submit" class="btn btn-default">提交</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

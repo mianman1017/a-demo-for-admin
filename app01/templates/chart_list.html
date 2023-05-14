@@ -1,0 +1,170 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+    <ol class="breadcrumb">
+        <li><a href="#">EAdmin</a></li>
+        <li class="active">chart</li>
+    </ol>
+    <div class="container">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                折线图
+            </div>
+            <div class="panel-body">
+                <div id="m1" style="width: 100%;height: 300px;"></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-8">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        柱状图
+                    </div>
+                    <div class="panel-body">
+                        <div id="m2" style="width: 100%;height: 400px;"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        饼图
+                    </div>
+                    <div class="panel-body">
+                        <div id="m3" style="width: 100%;height: 400px;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block js %}
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.2/dist/echarts.min.js"></script>
+    <script type="text/javascript">
+
+        // 基于准备好的dom，初始化echarts实例
+        var barChart = echarts.init(document.getElementById('m2'));
+        // 指定图表的配置项和数据
+        var option2 = {
+            title: {
+                text: '销量业绩月度汇总',
+                left: 'center',
+            },
+            tooltip: {},
+            legend: {
+                data: ['销量', '业绩'],
+                bottom: 0,
+            },
+            toolbox: {
+                feature: {
+                    saveAsImage: {}
+                }
+            },
+            xAxis: {
+                data: ['1月', '2月', '3月', '4月', '5月', '6月']
+            },
+            yAxis: {},
+            series: [
+                {
+                    name: '销量',
+                    type: 'bar',
+                    data: [5, 20, 36, 10, 10, 20]
+                },
+                {
+                    name: '业绩',
+                    type: 'bar',
+                    data: [10, 25, 30, 5, 20, 30]
+                }
+            ]
+        };
+        // 使用刚指定的配置项和数据显示图表。
+        barChart.setOption(option2);
+
+        var pieChart = echarts.init(document.getElementById('m3'))
+        var option3 = {
+            title: {
+                text: '部门预算占比',
+                subtext: '2023年',
+                left: 'center'
+            },
+            tooltip: {
+                trigger: 'item'
+            },
+            legend: {
+                bottom: 0,
+            },
+            toolbox: {
+                feature: {
+                    saveAsImage: {}
+                }
+            },
+            series: [
+                {
+                    name: 'Access From',
+                    type: 'pie',
+                    radius: '50%',
+                    data: [
+                        {value: 1048, name: '宣传部'},
+                        {value: 735, name: '运维部'},
+                        {value: 580, name: '策划部'},
+                        {value: 484, name: '财务部'},
+                        {value: 300, name: '其他'}
+                    ],
+                    emphasis: {
+                        itemStyle: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    }
+                }
+            ]
+        };
+        pieChart.setOption(option3);
+
+        var linearChart = echarts.init(document.getElementById('m1'));
+        var option1 = {
+            title: {
+                text: '业绩走向总览',
+                left: 'center',
+            },
+            tooltip: {
+                trigger: 'axis'
+            },
+            legend: {
+                data: ['实际业绩', '预测业绩'],
+                bottom: 0,
+            },
+            toolbox: {
+                feature: {
+                    saveAsImage: {}
+                }
+            },
+            xAxis: {
+                type: 'category',
+                boundaryGap: false,
+                data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月']
+            },
+            yAxis: {
+                type: 'value'
+            },
+            series: [
+                {
+                    name: '实际业绩',
+                    type: 'line',
+                    stack: 'Total',
+                    data: [120, 132, 101, 134, 90, 230, 210]
+                },
+                {
+                    name: '预测业绩',
+                    type: 'line',
+                    stack: 'Total',
+                    data: [220, 182, 191, 234, 290, 330, 310]
+                },
+            ]
+        };
+        linearChart.setOption(option1);
+    </script>
+{% endblock %}
